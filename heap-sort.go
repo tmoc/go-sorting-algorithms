@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func maxHeapifyAtIndex(slice []int, parentIdx int) {
+func maxHeapify(slice []int, parentIdx int) {
 	length := len(slice)
 	maxIdx := parentIdx
 	leftChildIdx := 2*parentIdx + 1
@@ -18,25 +18,23 @@ func maxHeapifyAtIndex(slice []int, parentIdx int) {
 
 	if maxIdx != parentIdx {
 		slice[maxIdx], slice[parentIdx] = slice[parentIdx], slice[maxIdx]
-		maxHeapifyAtIndex(slice, maxIdx)
+		maxHeapify(slice, maxIdx)
 	}
-}
-
-func maxHeapify(slice []int) []int {
-	for i := len(slice) / 2; i > -1; i-- {
-		maxHeapifyAtIndex(slice, i)
-	}
-	return slice
 }
 
 func heapSort(items []int) []int {
-	maxHeapify(items)
-	sliceIdx := len(items)
+	length := len(items)
 
-	for i := sliceIdx - 1; i >= 1; i-- {
+	// Create max heap.
+	for i := length / 2; i > -1; i-- {
+		maxHeapify(items, i)
+	}
+
+	// Sort.
+	for i := length - 1; i >= 1; i-- {
 		items[0], items[i] = items[i], items[0]
-		sliceIdx--
-		maxHeapifyAtIndex(items[:sliceIdx], 0)
+		length--
+		maxHeapify(items[:length], 0)
 	}
 
 	return items
