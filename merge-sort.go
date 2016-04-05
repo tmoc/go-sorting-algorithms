@@ -19,7 +19,11 @@ func mergeSorted(a []int, b []int) []int {
 		}
 	}
 
-	return append(result, append(a[idxA:], b[idxB:]...)...)
+  // One of these will not append anything.
+	result = append(result, a[idxA:]...)
+	result = append(result, b[idxB:]...)
+
+	return result
 }
 
 func mergeSort(items []int) []int {
